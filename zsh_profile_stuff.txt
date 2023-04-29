@@ -36,6 +36,7 @@ alias av='aws-vault'
 alias avl='av ls'
 alias ave='unset AWS_VAULT;aws-vault exec'
 alias clearaws='aws-vault clear; for var in $(env | grep "^AWS_" | awk -F= "{print \$1}"); do unset $var; done'
+alias gacs='gimme-aws-creds --profile sandbox'
 
 # Docker
 alias stopall='docker container stop $(docker container ls -q)'
@@ -66,11 +67,14 @@ function cmds() {
   echo ''
   echo '---- AWS COMMANDS ----'
   echo 'awsid'
+  echo 'awsids'
   echo 'av'
   echo 'avl'
   echo 'ave'
   echo 'clearaws -- unset VAULT stuff and clear all AWS envvars'
-  alias gacs='gimme-aws-creds --profile sandbox'
+  echo 'gac'
+  echo 'gacs'
+  echo 'avsg'
 
   echo ''
   echo '---- K8s COMMANDS ----'

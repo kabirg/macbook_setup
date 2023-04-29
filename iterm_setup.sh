@@ -22,3 +22,22 @@ if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
 else
   echo "powerlevel10k is already installed."
 fi
+
+echo "Configuration profile for iTerm2:"
+cat << ENDCAT
+  - Settings > Profiles > General:
+    - Rename 'Default' to 'kabir-main'
+  - Settings > Profiles > Window:
+    - Transparency: 16
+    - Blur: 8
+    - Columns: 115
+    - Rows: 30
+  - Settings > Profiles > Keys > Key Mappings:
+    - Double-click the '⌥<-' icon
+    - Action: 'Send Escape Sequence'
+    - Esc+: b
+    - Double-click the '⌥->' icon
+    - Action: 'Send Escape Sequence'
+    - Esc+: f
+
+ENDCAT

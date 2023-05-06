@@ -92,6 +92,15 @@ function tool_install() {
       continue
     fi
 
+    if [[ "$1" == java11 ]]; then
+      brew install java11
+      sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+    fi
+
+    if [[ "$1" == java8 ]]; then
+      brew install adoptopenjdk/openjdk/adoptopenjdk8
+    fi
+
     return 1
   else
     echo "........................................."
@@ -144,6 +153,10 @@ function tool_install() {
 
     if [[ "$1" == pip3 ]]; then
       validation $1 "--version"
+    fi
+
+    if [[ "$1" == java11 ]]; then
+      java -version
     fi
   fi
 }
@@ -214,6 +227,9 @@ tool_install ansible
 tool_install python3
 
 tool_install pip3
+
+tool_install java11
+
 
 echo "................................"
 echo "Tool installation complete...."

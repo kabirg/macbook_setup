@@ -42,6 +42,11 @@ alias gacs='gimme-aws-creds --profile sandbox'
 alias stopall='docker container stop $(docker container ls -q)'
 alias rmall='docker container rm $(docker container ls -aq)'
 
+# Java
+alias javals='/usr/libexec/java_home -V'
+
+# For any issue running older Terraform versions:
+# TFENV_ARCH=amd64 tfenv install <version>
 
 ##############################
 ###### Functions ######
@@ -99,6 +104,11 @@ function cmds() {
   echo ''
   echo '---- LINTING COMMANDS ----'
   echo 'yamllint'
+
+  echo ''
+  echo '---- JAVA COMMANDS ----'
+  echo 'jdk <version #> -- switches Java versions'
+  echo 'javals -- list installed java versions'
 }
 
 function avsg() {
@@ -157,4 +167,11 @@ function awsids() {
   echo "dev                        xxx"
   echo "prod                       xxx"
   echo "sandbox                    xxx"
+}
+
+# Check for location of all installed JDK's
+function jdk() {
+  version=$1
+  export JAVA_HOME=$(/usr/libexec/java_home -v"$version")
+  java -version
 }

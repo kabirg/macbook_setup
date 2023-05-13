@@ -26,6 +26,7 @@ function tool_install() {
     echo "........................................."
     echo ""
 
+    #Source: https://brew.sh/
     if [[ "$1" == brew ]]; then
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       read -p "Have you run the additional Brew commands from the output? (y/n)" answer
@@ -42,6 +43,7 @@ function tool_install() {
       esac
     fi
 
+    #Source: https://docs.docker.com/desktop/install/mac-install/
     if [[ "$1" == docker ]]; then
       echo "Installing Rosetta dependency first..."
       softwareupdate --install-rosetta
@@ -49,10 +51,12 @@ function tool_install() {
       confirm_complete
     fi
 
+    #Source: https://formulae.brew.sh/formula/tfenv
     if [[ "$1" == tfenv ]]; then
       brew install tfenv
     fi
 
+    #Source: https://formulae.brew.sh/formula/jq
     if [[ "$1" == jq ]]; then
       brew install jq
     fi
@@ -61,27 +65,33 @@ function tool_install() {
       brew install yamllint
     fi
 
+    #Source: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
     if [[ "$1" == aws ]]; then
       curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
       sudo installer -pkg AWSCLIV2.pkg -target /
     fi
 
+    #Source: https://helm.sh/docs/intro/install/#from-homebrew-macos
     if [[ "$1" == helm ]]; then
       brew install helm
     fi
 
+    #Source: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
     if [[ "$1" == kubectl ]]; then
       brew install kubectl
     fi
 
+    #Source: https://github.com/ahmetb/kubectx#homebrew-macos-and-linux
     if [[ "$1" == kubectx ]]; then
       brew install kubectx
     fi
 
+    #Source: https://k9scli.io/topics/install/
     if [[ "$1" == k9s ]]; then
       brew install derailed/k9s/k9s
     fi
 
+    #Source: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
     if [[ "$1" == ansible ]]; then
       python3 -m pip install --user ansible
       echo 'export PATH="$PATH:$(python3 -m site --user-base)/bin"'
@@ -192,44 +202,12 @@ echo " - First install the CLI developer tools (which contain the Python interpr
 echo " - MacOS provides shims (symlinks) for Python3/pip3 in '/usr/bin'. These will redirect commands to the Python interpreter. So you dont need to install them manually."
 confirm_complete
 
-#Source: https://brew.sh/
-tool_install brew
+# List of tools to install
+tools=("brew" "docker" "tfenv" "jq" "yamllint" "aws" "helm" "kubectl" "kubectx" "k9s" "ansible" "python3" "pip3" "java11")
 
-#Source: https://docs.docker.com/desktop/install/mac-install/
-tool_install docker
-
-#Source: https://formulae.brew.sh/formula/tfenv
-tool_install tfenv
-
-#Source: https://formulae.brew.sh/formula/jq
-tool_install jq
-
-tool_install yamllint
-
-#Source: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-tool_install aws
-
-#Source: https://helm.sh/docs/intro/install/#from-homebrew-macos
-tool_install helm
-
-#Source: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
-tool_install kubectl
-
-#Source: https://github.com/ahmetb/kubectx#homebrew-macos-and-linux
-tool_install kubectx
-
-#Source: https://k9scli.io/topics/install/
-tool_install k9s
-
-#Source: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
-tool_install ansible
-
-tool_install python3
-
-tool_install pip3
-
-tool_install java11
-
+for tool in "${tools[@]}"; do
+    tool_install "$tool"
+done
 
 echo "................................"
 echo "Tool installation complete...."
@@ -248,17 +226,19 @@ echo "- Packer (https://formulae.brew.sh/formula/packer)"
 echo "- Lens (https://k8slens.dev/desktop.html)"
 
 echo "................................"
-echo "Setup your SSH key..."
 #Source: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-echo " - ssh-keygen -t ed25519 -C 'your_email@example.com'"
-echo " - eval '\$(ssh-agent -s)'"
-echo " - touch ~/.ssh/config"
 cat << 'ENDCAT'
+Setup your SSH key...
+- ssh-keygen -t ed25519 -C 'your_email@example.com'
+- eval '\$(ssh-agent -s)'
+- touch ~/.ssh/config
+
 Host github.com
   AddKeysToAgent yes
   UseKeychain yes
   IdentityFile ~/.ssh/id_ed25519"
+
+- ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+- Add the key to your GitHub account
+**NOTE: use double-quotes
 ENDCAT
-echo " - ssh-add --apple-use-keychain ~/.ssh/id_ed25519"
-echo " - Add the key to your GitHub account"
-echo "NOTE: use double-quotes"

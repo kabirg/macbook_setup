@@ -290,6 +290,9 @@ function cmds() {
   echo 'gb'
   echo 'gcb'
   echo 'gpo'
+  echo 'gpos'
+  echo 'gacp -- git add/commit/push - accepts custom-message'
+
 
   echo ''
   echo '---- AWS COMMANDS ----'
